@@ -61,23 +61,32 @@ public class SettingsRepository {
     }
 
     /**
-     * Zet de gelezen waarden in de instellingen. Een waarde die niet klopt, wordt
-     * overgeslagen zodat de standaardwaarde blijft staan.
+     * Zet de gelezen waarden in de instellingen. Elke kleur wordt apart nagekeken,
+     * zodat één foute kleur in het bestand de andere kleuren niet meesleept.
      */
     private void fillSettings(Settings settings, Properties properties) {
-        try {
-            settings.setLightSquareColor(
-                    properties.getProperty(LIGHT_SQUARE_KEY, Settings.DEFAULT_LIGHT_SQUARE));
-            settings.setDarkSquareColor(
-                    properties.getProperty(DARK_SQUARE_KEY, Settings.DEFAULT_DARK_SQUARE));
-            settings.setWhitePieceColor(
-                    properties.getProperty(WHITE_PIECE_KEY, Settings.DEFAULT_WHITE_PIECE));
-            settings.setBlackPieceColor(
-                    properties.getProperty(BLACK_PIECE_KEY, Settings.DEFAULT_BLACK_PIECE));
-        } catch (IllegalArgumentException exception) {
-            // Een kleur die niet klopt laten we staan op de standaardkleur.
-        }
+        settings.setLightSquareColor(
+                readColor(properties, LIGHT_SQUARE_KEY, Settings.DEFAULT_LIGHT_SQUARE));
+        settings.setDarkSquareColor(
+                readColor(properties, DARK_SQUARE_KEY, Settings.DEFAULT_DARK_SQUARE));
+        settings.setWhitePieceColor(
+                readColor(properties, WHITE_PIECE_KEY, Settings.DEFAULT_WHITE_PIECE));
+        settings.setBlackPieceColor(
+                readColor(properties, BLACK_PIECE_KEY, Settings.DEFAULT_BLACK_PIECE));
         settings.setSoundOn(Boolean.parseBoolean(properties.getProperty(SOUND_KEY, "true")));
+    }
+
+    /**
+     * Leest één kleur uit het bestand.
+     *
+     * @return de kleur uit het bestand, of de standaardkleur als ze niet klopt
+     */
+    private String readColor(Properties properties, String key, String defaultColor) {
+        String color = properties.getProperty(key, defaultColor);
+        if (Settings.isValidColor(color)) {
+            return color;
+        }
+        return defaultColor;
     }
 
     /**

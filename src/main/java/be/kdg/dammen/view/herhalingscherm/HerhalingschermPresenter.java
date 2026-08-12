@@ -1,5 +1,6 @@
 package be.kdg.dammen.view.herhalingscherm;
 
+import be.kdg.dammen.model.DraughtsException;
 import be.kdg.dammen.model.DraughtsGame;
 import be.kdg.dammen.model.Move;
 import be.kdg.dammen.model.Piece;
@@ -7,6 +8,7 @@ import be.kdg.dammen.model.PieceColor;
 import be.kdg.dammen.model.Position;
 import be.kdg.dammen.model.Settings;
 import be.kdg.dammen.model.SettingsRepository;
+import be.kdg.dammen.view.DialogHelper;
 import be.kdg.dammen.view.spelscherm.BoardPane;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
@@ -91,8 +93,7 @@ public class HerhalingschermPresenter {
      */
     private void togglePlaying() {
         if (playing) {
-            playing = false;
-            view.showPlaying(false);
+            stopPlaying();
             return;
         }
         if (isAtEnd()) {
@@ -149,11 +150,27 @@ public class HerhalingschermPresenter {
     }
 
     /**
-     * Speelt de zet echt op het bord en tekent alles opnieuw.
+     * Speelt de zet echt op het bord en tekent alles opnieuw. Zou een zet uit de
+     * geschiedenis toch niet meer kunnen, dan stoppen we het afspelen netjes in plaats
+     * van de speler met een vastgelopen scherm achter te laten.
      */
     private void applyMove(Move move) {
-        model.movePiece(move.getFrom(), move.getTo());
-        updateView();
+        try {
+            model.movePiece(move.getFrom(), move.getTo());
+            updateView();
+        } catch (DraughtsException exception) {
+            stopPlaying();
+            DialogHelper.showError("Herbekijken lukt niet",
+                    "Deze zet kon niet opnieuw afgespeeld worden.");
+        }
+    }
+
+    /**
+     * Stopt het automatisch afspelen en zet de knop terug op "Afspelen".
+     */
+    private void stopPlaying() {
+        playing = false;
+        view.showPlaying(false);
     }
 
     /**
@@ -164,8 +181,7 @@ public class HerhalingschermPresenter {
             return;
         }
         if (isAtEnd()) {
-            playing = false;
-            view.showPlaying(false);
+            stopPlaying();
             return;
         }
         PauseTransition pause = new PauseTransition(Duration.millis(PAUSE_BETWEEN_MOVES));
@@ -185,8 +201,13 @@ public class HerhalingschermPresenter {
         if (animating || !model.canUndo()) {
             return;
         }
-        model.undoMoves(1);
-        updateView();
+        try {
+            model.undoMoves(1);
+            updateView();
+        } catch (DraughtsException exception) {
+            DialogHelper.showError("Herbekijken lukt niet",
+                    "Deze zet kon niet teruggenomen worden.");
+        }
     }
 
     private void restart() {

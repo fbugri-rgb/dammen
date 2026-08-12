@@ -74,19 +74,31 @@ public class Settings {
     }
 
     /**
+     * Kijkt na of een tekst een geldige kleur is, bijvoorbeeld "#8B5E3C".
+     *
+     * @return true als de tekst een geldige kleur is
+     */
+    public static boolean isValidColor(String color) {
+        if (color == null || color.length() != COLOR_TEXT_LENGTH || !color.startsWith("#")) {
+            return false;
+        }
+        for (int i = 1; i < color.length(); i++) {
+            if (Character.digit(color.charAt(i), 16) < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * Een kleur wordt bewaard als tekst, bijvoorbeeld "#8B5E3C".
      *
      * @return dezelfde kleur, in hoofdletters
      * @throws IllegalArgumentException als de tekst geen geldige kleur is
      */
     private String checkColor(String color) {
-        if (color == null || color.length() != COLOR_TEXT_LENGTH || !color.startsWith("#")) {
+        if (!isValidColor(color)) {
             throw new IllegalArgumentException("Dit is geen geldige kleur: " + color);
-        }
-        for (int i = 1; i < color.length(); i++) {
-            if (Character.digit(color.charAt(i), 16) < 0) {
-                throw new IllegalArgumentException("Dit is geen geldige kleur: " + color);
-            }
         }
         return color.toUpperCase();
     }

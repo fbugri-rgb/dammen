@@ -102,6 +102,17 @@ class SettingsRepositoryTest {
     }
 
     @Test
+    @DisplayName("isValidColor herkent geldige en ongeldige kleuren")
+    void isValidColorRecognisesColors() {
+        assertTrue(Settings.isValidColor("#8B5E3C"));
+        assertTrue(Settings.isValidColor("#abcdef"));
+        assertFalse(Settings.isValidColor("#12345"), "te kort");
+        assertFalse(Settings.isValidColor("123456"), "geen hekje");
+        assertFalse(Settings.isValidColor("#GGGGGG"), "geen hexcijfers");
+        assertFalse(Settings.isValidColor(null));
+    }
+
+    @Test
     @DisplayName("Een beschadigd bestand geeft gewoon de standaardinstellingen")
     void brokenFileGivesDefaults() throws IOException {
         PrintWriter writer = new PrintWriter(file);
@@ -113,6 +124,25 @@ class SettingsRepositoryTest {
 
         assertEquals(Settings.DEFAULT_DARK_SQUARE, settings.getDarkSquareColor());
         assertFalse(settings.isSoundOn(), "alles behalve 'true' betekent geluid uit");
+    }
+
+    @Test
+    @DisplayName("Eén foute kleur laat de andere kleuren uit het bestand ongemoeid")
+    void oneBrokenColorDoesNotAffectTheOthers() throws IOException {
+        PrintWriter writer = new PrintWriter(file);
+        writer.println("kleur.veld.licht=dit is geen kleur");
+        writer.println("kleur.veld.donker=#2F6B4F");
+        writer.println("kleur.schijf.wit=#F5F5F5");
+        writer.println("kleur.schijf.zwart=#B03030");
+        writer.close();
+
+        Settings settings = repository.readSettings();
+
+        assertEquals(Settings.DEFAULT_LIGHT_SQUARE, settings.getLightSquareColor(),
+                "de foute kleur valt terug op de standaardkleur");
+        assertEquals("#2F6B4F", settings.getDarkSquareColor(), "deze kleur klopt wel");
+        assertEquals("#F5F5F5", settings.getWhitePieceColor(), "deze kleur klopt wel");
+        assertEquals("#B03030", settings.getBlackPieceColor(), "deze kleur klopt wel");
     }
 
     @Test

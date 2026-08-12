@@ -37,6 +37,8 @@ public class ScreenHelper {
     private static final double SECONDARY_HEIGHT = 580;
     private static final double REPLAY_WIDTH = 720;
     private static final double REPLAY_HEIGHT = 830;
+    private static final double REPLAY_MINIMUM_WIDTH = 660;
+    private static final double REPLAY_MINIMUM_HEIGHT = 800;
     private static final double MINIMUM_WIDTH = 400;
     private static final double MINIMUM_HEIGHT = 320;
 
@@ -104,7 +106,8 @@ public class ScreenHelper {
         }
         HerhalingschermView view = new HerhalingschermView();
         new HerhalingschermPresenter(playedGame, view);
-        showInNewStage(view, "Het spel herbekijken", owner, REPLAY_WIDTH, REPLAY_HEIGHT);
+        showInNewStage(view, "Het spel herbekijken", owner, REPLAY_WIDTH, REPLAY_HEIGHT,
+                REPLAY_MINIMUM_WIDTH, REPLAY_MINIMUM_HEIGHT);
     }
 
     /**
@@ -112,18 +115,24 @@ public class ScreenHelper {
      * moet dit venster eerst sluiten voor hij verder kan spelen.
      */
     private static void showInNewStage(Parent view, String title, Window owner) {
-        showInNewStage(view, title, owner, SECONDARY_WIDTH, SECONDARY_HEIGHT);
+        showInNewStage(view, title, owner, SECONDARY_WIDTH, SECONDARY_HEIGHT,
+                MINIMUM_WIDTH, MINIMUM_HEIGHT);
     }
 
+    /**
+     * Het herhalingsscherm heeft een groter venster nodig dan de andere schermen,
+     * want daar moet een volledig dambord op passen.
+     */
     private static void showInNewStage(Parent view, String title, Window owner,
-                                       double width, double height) {
+                                       double width, double height,
+                                       double minimumWidth, double minimumHeight) {
         Stage stage = new Stage();
         Scene scene = new Scene(view, width, height);
         applyStyleSheet(scene);
         stage.setScene(scene);
         stage.setTitle(title);
-        stage.setMinWidth(MINIMUM_WIDTH);
-        stage.setMinHeight(MINIMUM_HEIGHT);
+        stage.setMinWidth(minimumWidth);
+        stage.setMinHeight(minimumHeight);
         if (owner != null) {
             stage.initOwner(owner);
             stage.initModality(Modality.APPLICATION_MODAL);

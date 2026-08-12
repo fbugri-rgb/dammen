@@ -70,7 +70,7 @@ public class InstellingenschermPresenter {
         try {
             model.saveSettings(readSettingsFromView());
             closeWindow();
-        } catch (DraughtsException exception) {
+        } catch (DraughtsException | IllegalArgumentException exception) {
             DialogHelper.showError("Bewaren mislukt", exception.getMessage());
         }
     }

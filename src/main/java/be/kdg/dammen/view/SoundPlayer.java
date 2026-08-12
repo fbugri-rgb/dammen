@@ -30,16 +30,22 @@ public class SoundPlayer {
     }
 
     /**
-     * Laadt één geluidsbestand.
+     * Laadt één geluidsbestand. Lukt dat niet, bijvoorbeeld omdat het bestand ontbreekt
+     * of omdat deze computer geen geluid kan afspelen, dan speelt het spel gewoon
+     * verder zonder dat geluidje.
      *
-     * @return het geluid, of null als het bestand ontbreekt
+     * @return het geluid, of null als het niet geladen kon worden
      */
     private AudioClip loadSound(String fileName) {
         URL url = SoundPlayer.class.getResource(SOUND_FOLDER + fileName);
         if (url == null) {
             return null;
         }
-        return new AudioClip(url.toExternalForm());
+        try {
+            return new AudioClip(url.toExternalForm());
+        } catch (RuntimeException exception) {
+            return null;
+        }
     }
 
     public void setSoundOn(boolean soundOn) {

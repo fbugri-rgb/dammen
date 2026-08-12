@@ -17,8 +17,13 @@ public class Main extends Application {
 
     private static final double WINDOW_WIDTH = 1000;
     private static final double WINDOW_HEIGHT = 780;
-    private static final double MINIMUM_WIDTH = 720;
-    private static final double MINIMUM_HEIGHT = 560;
+    /**
+     * Kleiner mag het venster niet worden: dan valt een stuk van het bord of van het
+     * paneel ernaast buiten beeld. Het bord is 10 velden van 56 pixels breed, met
+     * daarnaast het paneel met de geslagen schijven en de zetten.
+     */
+    private static final double MINIMUM_WIDTH = 900;
+    private static final double MINIMUM_HEIGHT = 740;
 
     @Override
     public void start(Stage primaryStage) {

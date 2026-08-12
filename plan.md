@@ -103,6 +103,8 @@ Werkt de groene pijl niet meteen, dan moet IntelliJ nog weten waar JavaFX staat
 - [x] Hoofdscherm + helpscherm + highscorescherm + aboutscherm aanwezig
 - [x] Applicatie crasht nooit; foute input onmogelijk; zinvolle feedback
 - [x] Herschaalbaar, uitgelijnd, marges, één taal, geen schrijffouten
+      (het venster kan niet kleiner dan 900 x 740: het spelscherm heeft 860 x 684
+      nodig, anders valt een stuk van het bord of van het zijpaneel weg)
 - [x] Menubalk bovenaan (op het startscherm én het spelscherm)
 
 ### Technische realisatie
@@ -155,6 +157,25 @@ moet je die eerst gaan openen.
 | `HighScoreRepositoryTest` | 9 | bewaren, sorteren, hoogstens tien, beschadigde lijnen |
 | `SettingsRepositoryTest` | 7 | standaardwaarden, bewaren en terug inlezen, foute kleuren |
 | `RulesReaderTest` | 1 | de spelregels worden uit het tekstbestand gelezen |
+
+Totaal: **100 testen**.
+
+### Exception handling: waar wordt wat opgevangen?
+Het model gooit (48 keer `throw`), de presenters vangen op en tonen een `Alert`:
+
+| Wat kan er misgaan | Gegooid in | Opgevangen in |
+|---|---|---|
+| ongeldige zet, spel al gedaan | `DraughtsGame.movePiece` | `SpelschermPresenter`, `HerhalingschermPresenter` |
+| te veel zetten terugnemen | `DraughtsGame.undoMoves` | `SpelschermPresenter`, `HerhalingschermPresenter` |
+| lege of te lange spelersnaam | `Player` | `StartschermPresenter` |
+| bestand onleesbaar of geen damspel | `GameStorage` (wrapt `IOException`) | `SpelschermPresenter`, `StartschermPresenter` |
+| topscores niet leesbaar of schrijfbaar | `HighScoreRepository` (wrapt `IOException`) | `SpelschermPresenter`, `HighscoreschermPresenter` |
+| spelregelbestand ontbreekt | `RulesReader` (wrapt `IOException`) | `HelpschermPresenter` |
+| instellingen niet schrijfbaar, foute kleur | `SettingsRepository`, `Settings` | `InstellingenschermPresenter` |
+| computer kan niet spelen | `ComputerPlayer` | `SpelschermPresenter` |
+
+Er is nergens een `catch` die enkel een stacktrace print, en er staat geen enkele
+`System.out` in de code.
 
 De testen die met bestanden werken, gebruiken een **tijdelijke map** (`@TempDir`).
 De echte `highscores.txt` en `instellingen.properties` worden dus nooit overschreven.
