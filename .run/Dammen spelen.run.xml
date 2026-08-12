@@ -1,6 +1,10 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Dammen spelen" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="be.kdg.dammen.Main" />
+    <!-- JavaFX moet als module geladen worden, anders weigert Java een klasse te
+         starten die overerft van Application. $MAVEN_REPOSITORY$ is de map .m2 van
+         de gebruiker, die vult IntelliJ zelf in. -->
+    <option name="VM_PARAMETERS" value="--module-path &quot;$MAVEN_REPOSITORY$/org/openjfx/javafx-base/21.0.6/javafx-base-21.0.6-win.jar;$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/21.0.6/javafx-graphics-21.0.6-win.jar;$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/21.0.6/javafx-controls-21.0.6-win.jar;$MAVEN_REPOSITORY$/org/openjfx/javafx-media/21.0.6/javafx-media-21.0.6-win.jar&quot; --add-modules javafx.controls,javafx.media" />
     <module name="Dammen" />
     <method v="2">
       <option name="Make" enabled="true" />

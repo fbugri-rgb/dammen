@@ -21,8 +21,9 @@ lichten groen op.
 
 ## Starten
 
-Open het project in IntelliJ IDEA (het wordt vanzelf ingelezen via `pom.xml`) en voer
-**`be.kdg.dammen.Main`** uit, of kies bovenaan de startconfiguratie **"Dammen spelen"**.
+Open het project in IntelliJ IDEA (het wordt vanzelf ingelezen via `pom.xml`), kies
+bovenaan de startconfiguratie **"Dammen spelen"** en klik op de groene pijl. Die
+configuratie start `be.kdg.dammen.Main` op en zit mee in het project.
 
 Vanuit een terminal kan het ook:
 
@@ -30,16 +31,25 @@ Vanuit een terminal kan het ook:
 mvn clean javafx:run
 ```
 
-> **Krijg je de melding "JavaFX runtime components are missing"?**
-> Dan moet IntelliJ nog weten waar JavaFX staat. Ga naar
-> *Run → Edit Configurations*, en zet bij **VM options** deze regel
-> (pas het pad naar je gebruikersmap aan als dat nodig is):
->
-> ```
-> --module-path "C:\Users\<gebruiker>\.m2\repository\org\openjfx\javafx-base\21.0.6\javafx-base-21.0.6-win.jar;C:\Users\<gebruiker>\.m2\repository\org\openjfx\javafx-graphics\21.0.6\javafx-graphics-21.0.6-win.jar;C:\Users\<gebruiker>\.m2\repository\org\openjfx\javafx-controls\21.0.6\javafx-controls-21.0.6-win.jar;C:\Users\<gebruiker>\.m2\repository\org\openjfx\javafx-media\21.0.6\javafx-media-21.0.6-win.jar" --add-modules javafx.controls,javafx.media
-> ```
->
-> Met `mvn clean javafx:run` is dat nooit nodig: die regelt het zelf.
+### Waarom er VM-opties bij de startconfiguratie staan
+
+`Main` erft over van `Application`, en Java weigert zo'n klasse te starten zolang
+JavaFX niet als **module** geladen is. JavaFX komt hier via Maven binnen en staat dus
+op het klassenpad, niet op het modulepad. Zonder extra opties krijg je daarom:
+
+```
+Error: JavaFX runtime components are missing, and are required to run this application
+```
+
+De startconfiguratie lost dat op met deze VM-opties, waarbij `$MAVEN_REPOSITORY$` door
+IntelliJ zelf ingevuld wordt met de map `.m2` van de gebruiker:
+
+```
+--module-path "$MAVEN_REPOSITORY$/org/openjfx/javafx-base/21.0.6/javafx-base-21.0.6-win.jar;...(graphics, controls, media)..." --add-modules javafx.controls,javafx.media
+```
+
+Werk je op macOS of Linux, vervang dan `-win` door `-mac` of `-linux`.
+Met `mvn clean javafx:run` is dit nooit nodig: die plugin regelt het modulepad zelf.
 
 ## De testen uitvoeren
 
