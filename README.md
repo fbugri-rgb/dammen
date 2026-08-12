@@ -21,18 +21,25 @@ lichten groen op.
 
 ## Starten
 
-Open het project in IntelliJ IDEA (het wordt vanzelf ingelezen via `pom.xml`) en
-voer **`be.kdg.dammen.DammenLauncher`** uit.
-
-> Start `DammenLauncher` en niet `DammenMain`: Java weigert een klasse te starten die
-> overerft van `Application` zolang JavaFX niet als module geladen is. `DammenLauncher`
-> erft daar niet van over en start het spel dus altijd op.
+Open het project in IntelliJ IDEA (het wordt vanzelf ingelezen via `pom.xml`) en voer
+**`be.kdg.dammen.Main`** uit, of kies bovenaan de startconfiguratie **"Dammen spelen"**.
 
 Vanuit een terminal kan het ook:
 
 ```
 mvn clean javafx:run
 ```
+
+> **Krijg je de melding "JavaFX runtime components are missing"?**
+> Dan moet IntelliJ nog weten waar JavaFX staat. Ga naar
+> *Run → Edit Configurations*, en zet bij **VM options** deze regel
+> (pas het pad naar je gebruikersmap aan als dat nodig is):
+>
+> ```
+> --module-path "C:\Users\<gebruiker>\.m2\repository\org\openjfx\javafx-base\21.0.6\javafx-base-21.0.6-win.jar;C:\Users\<gebruiker>\.m2\repository\org\openjfx\javafx-graphics\21.0.6\javafx-graphics-21.0.6-win.jar;C:\Users\<gebruiker>\.m2\repository\org\openjfx\javafx-controls\21.0.6\javafx-controls-21.0.6-win.jar;C:\Users\<gebruiker>\.m2\repository\org\openjfx\javafx-media\21.0.6\javafx-media-21.0.6-win.jar" --add-modules javafx.controls,javafx.media
+> ```
+>
+> Met `mvn clean javafx:run` is dat nooit nodig: die regelt het zelf.
 
 ## De testen uitvoeren
 

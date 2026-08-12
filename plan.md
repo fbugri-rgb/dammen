@@ -35,8 +35,7 @@
 
 ```
 src/main/java/be/kdg/dammen/
-├── DammenMain.java                 ← Application, start het startscherm
-├── DammenLauncher.java             ← startklasse (zie opmerking hieronder)
+├── Main.java                       ← Application, start het startscherm
 ├── model/                          ← GEEN JavaFX imports
 │   ├── DraughtsGame.java           ← hoofdmodel: beurt, status, zetgeschiedenis
 │   ├── Board.java                  ← Piece[10][10]  (2D-array vereiste)
@@ -76,11 +75,11 @@ src/main/resources/be/kdg/dammen/view/
 └── data/spelregels.txt
 ```
 
-**Waarom een aparte DammenLauncher-klasse?**
-Java weigert een klasse te starten die overerft van `Application` zolang JavaFX niet
-als *module* geladen is. Omdat JavaFX hier via Maven op het klassenpad staat, start
-`DammenLauncher` (die niet overerft van `Application`) het spel op. Zo werkt de groene
-pijl in IntelliJ altijd. `DammenMain` blijft de gewone Application-klasse uit de les.
+**Opstarten**
+`Main` is de gewone Application-klasse zoals in de les: ze erft over van `Application`,
+zet het startscherm op de stage en wordt gestart met `Application.launch(args)`.
+Werkt de groene pijl niet meteen, dan moet IntelliJ nog weten waar JavaFX staat
+(zie de VM-opties in `README.md`); met `mvn clean javafx:run` is dat nooit nodig.
 
 **MVP-afspraken die we strikt volgen**
 - Model kent de view niet en importeert nooit JavaFX.

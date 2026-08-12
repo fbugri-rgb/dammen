@@ -74,7 +74,7 @@
                         <!-- Uitvoeren met: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>be.kdg.dammen.DammenMain</mainClass>
+                            <mainClass>be.kdg.dammen.Main</mainClass>
                         </configuration>
                     </execution>
                 </executions>

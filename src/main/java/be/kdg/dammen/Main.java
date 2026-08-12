@@ -13,7 +13,7 @@ import javafx.stage.Stage;
  * @author Farok Bugri
  * @version 1.0
  */
-public class DammenMain extends Application {
+public class Main extends Application {
 
     private static final double WINDOW_WIDTH = 1000;
     private static final double WINDOW_HEIGHT = 780;
