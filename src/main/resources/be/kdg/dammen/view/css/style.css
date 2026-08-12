@@ -1,0 +1,150 @@
+/* Opmaak van het damspel. Kleuren: warm hout voor het bord, rustige grijstinten
+   voor de schermen. Auteur: Farok Bugri */
+
+.root {
+    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+    -fx-font-size: 13px;
+    -fx-background-color: #f2efe9;
+}
+
+/* ---------- titels en teksten ---------- */
+
+.game-title {
+    -fx-font-size: 52px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4a3728;
+}
+
+.screen-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4a3728;
+}
+
+.panel-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4a3728;
+}
+
+.turn-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2f2f2f;
+}
+
+.message-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #5a5a5a;
+}
+
+.winner-label {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1d6b3f;
+}
+
+.empty-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #7a7a7a;
+}
+
+.table-header {
+    -fx-font-weight: bold;
+    -fx-text-fill: #4a3728;
+    -fx-underline: true;
+}
+
+/* ---------- knoppen ---------- */
+
+.button {
+    -fx-background-color: #6b4f3a;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-padding: 8 16 8 16;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #855f44;
+}
+
+.button:pressed {
+    -fx-background-color: #533b2b;
+}
+
+.main-button {
+    -fx-background-color: #1d6b3f;
+    -fx-font-weight: bold;
+}
+
+.main-button:hover {
+    -fx-background-color: #248a50;
+}
+
+/* ---------- het dambord ---------- */
+
+.board {
+    -fx-border-color: #4a3728;
+    -fx-border-width: 6;
+    -fx-background-color: #4a3728;
+}
+
+/* De kleuren van de velden en de schijven staan niet in dit bestand: de speler kiest
+   ze zelf in het instellingenscherm, en BoardPane zet ze rechtstreeks op de velden. */
+
+/* ---------- vakken met geslagen schijven ---------- */
+
+.captured-pane {
+    -fx-background-color: #e6e0d4;
+    -fx-border-color: #b9a88c;
+    -fx-border-width: 1;
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
+}
+
+/* ---------- schermen ---------- */
+
+.start-screen {
+    -fx-background-color: #f2efe9;
+}
+
+.name-grid {
+    -fx-background-color: #e6e0d4;
+    -fx-background-radius: 8;
+}
+
+.game-screen {
+    -fx-background-color: #f2efe9;
+}
+
+.end-screen {
+    -fx-background-color: #f2efe9;
+}
+
+.settings-screen {
+    -fx-background-color: #f2efe9;
+}
+
+.replay-screen {
+    -fx-background-color: #f2efe9;
+}
+
+.radio-button {
+    -fx-font-size: 14px;
+}
+
+.check-box {
+    -fx-font-size: 14px;
+}
+
+.text-area {
+    -fx-font-family: "Consolas", "Courier New", monospace;
+    -fx-font-size: 13px;
+}
+
+.list-view {
+    -fx-background-color: white;
+    -fx-border-color: #b9a88c;
+}

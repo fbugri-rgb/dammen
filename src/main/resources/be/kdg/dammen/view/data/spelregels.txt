@@ -1,0 +1,40 @@
+HET DAMBORD
+Het bord bestaat uit 100 velden, 10 rijen van 10, afwisselend licht en donker.
+Er wordt enkel op de donkere velden gespeeld.
+Elke speler begint met 20 schijven: wit onderaan, zwart bovenaan.
+Wit begint het spel, daarna spelen de spelers om beurt.
+
+EEN SCHIJF VERZETTEN
+Een gewone schijf schuift 1 veld schuin naar voren, naar een leeg veld.
+Achteruit schuiven mag niet met een gewone schijf.
+Je verzet een schijf op twee manieren:
+ - sleep de schijf naar het gewenste veld (drag and drop), of
+ - klik op je schijf en klik daarna op het veld waar ze naartoe moet.
+De velden waar je naartoe mag, lichten groen op zodra je een schijf kiest.
+Klik nog eens op dezelfde schijf om je keuze ongedaan te maken.
+
+SLAAN
+Ligt er schuin voor je schijf een schijf van de tegenstander en is het veld
+daarachter leeg, dan spring je erover heen. De geslagen schijf gaat van het bord
+en komt in het vak naast het bord terecht.
+SLAAN IS VERPLICHT. Kan je slaan, dan mag je geen gewone zet doen.
+Kan je na het slaan nog eens slaan met dezelfde schijf, dan moet je doorslaan.
+Je beurt is pas gedaan als die schijf niet meer kan slaan.
+
+DE DAM
+Bereikt een gewone schijf de overkant van het bord (de damlijn), dan wordt ze een
+dam. Een dam herken je aan de kroon op de schijf.
+Een dam mag schuin vooruit en achteruit, en over meerdere velden tegelijk.
+Een dam slaat ook op afstand: staat er ergens op haar diagonaal precies één schijf
+van de tegenstander met daarachter een leeg veld, dan mag ze die slaan en op elk
+leeg veld daarachter landen.
+Word je dam tijdens een slagreeks, dan stopt je beurt daar.
+
+WINNEN
+Je wint als je tegenstander geen enkele schijf meer heeft,
+of als hij geen enkele zet meer kan doen.
+
+OPMERKING BIJ DEZE VERSIE
+In het officiële dammen bestaat ook de meerslagregel: je moet dan altijd de
+slagzet spelen waarmee je de meeste schijven slaat. In dit spel is die regel niet
+ingebouwd: je mag zelf kiezen welke slagzet je speelt.
