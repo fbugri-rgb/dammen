@@ -5,7 +5,8 @@
 #  Spelers hoeven dus zelf niets te installeren.
 #
 #    Windows -> target/dist/Dammen-windows.zip  (map met Dammen.exe)
-#    macOS   -> target/dist/Dammen-macos.dmg    (Dammen.app)
+#    macOS   -> target/dist/Dammen-macos-apple-silicon.dmg of
+#               target/dist/Dammen-macos-intel.dmg (Dammen.app)
 #    Linux   -> target/dist/Dammen-linux.tar.gz (map met bin/Dammen)
 #
 #  Nodig: JDK 21 (met jpackage). Gebruik: bash scripts/package.sh
@@ -59,7 +60,9 @@ case "$os" in
             "Compress-Archive -Path '$dist/Dammen' -DestinationPath '$dist/Dammen-windows.zip' -Force"
         ;;
     macos)
-        mv "$dist"/Dammen-*.dmg "$dist/Dammen-macos.dmg"
+        # Een Mac-versie werkt enkel op het soort processor waarop ze gebouwd is.
+        if [ "$(uname -m)" = arm64 ]; then chip=apple-silicon; else chip=intel; fi
+        mv "$dist"/Dammen-*.dmg "$dist/Dammen-macos-$chip.dmg"
         ;;
     linux)
         tar -czf "$dist/Dammen-linux.tar.gz" -C "$dist" Dammen

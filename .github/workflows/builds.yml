@@ -24,7 +24,9 @@ jobs:
           - os: windows-latest
             file: Dammen-windows.zip
           - os: macos-latest
-            file: Dammen-macos.dmg
+            file: Dammen-macos-apple-silicon.dmg
+          - os: macos-15-intel
+            file: Dammen-macos-intel.dmg
           - os: ubuntu-latest
             file: Dammen-linux.tar.gz
     runs-on: ${{ matrix.os }}
@@ -46,7 +48,7 @@ jobs:
         shell: bash
         run: bash scripts/package.sh
 
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: ${{ matrix.file }}
           path: target/dist/${{ matrix.file }}
@@ -57,7 +59,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           path: dist
           merge-multiple: true
@@ -70,7 +72,7 @@ jobs:
           Download het bestand voor jouw computer. Java installeren is niet nodig.
 
           - **Windows:** Dammen-windows.zip uitpakken en Dammen.exe in de map Dammen openen. Klik bij "Windows heeft uw pc beschermd" op *Meer info* > *Toch uitvoeren*.
-          - **macOS (Apple Silicon):** Dammen-macos.dmg openen en Dammen naar Programma's slepen. De eerste keer: Systeeminstellingen > Privacy en beveiliging > *Toch openen*.
+          - **macOS:** Dammen-macos-apple-silicon.dmg (Mac met M1 of nieuwer) of Dammen-macos-intel.dmg (oudere Mac met Intel-processor; te zien via Apple-menu > Over deze Mac) openen en Dammen naar Programma's slepen. De eerste keer: Systeeminstellingen > Privacy en beveiliging > *Toch openen*.
           - **Linux:** Dammen-linux.tar.gz uitpakken en Dammen/bin/Dammen starten.
           NOTES
           gh release create "$GITHUB_REF_NAME" dist/* --repo "$GITHUB_REPOSITORY" --title "Dammen $GITHUB_REF_NAME" --notes-file notes.md

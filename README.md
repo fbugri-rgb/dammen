@@ -28,7 +28,10 @@ installeren.
 | Computer | Bestand | Starten |
 |---|---|---|
 | Windows | `Dammen-windows.zip` | Uitpakken en `Dammen.exe` in de map `Dammen` openen. Klik bij "Windows heeft uw pc beschermd" op *Meer info* > *Toch uitvoeren*. |
-| macOS (Apple Silicon) | `Dammen-macos.dmg` | Openen en Dammen naar *Programma's* slepen. De eerste keer: *Systeeminstellingen* > *Privacy en beveiliging* > *Toch openen*. |
+| macOS met Apple-chip (M1 of nieuwer) | `Dammen-macos-apple-silicon.dmg` | Openen en Dammen naar *Programma's* slepen. De eerste keer: *Systeeminstellingen* > *Privacy en beveiliging* > *Toch openen*. |
+| macOS met Intel-processor | `Dammen-macos-intel.dmg` | Openen en Dammen naar *Programma's* slepen. De eerste keer: *Systeeminstellingen* > *Privacy en beveiliging* > *Toch openen*. |
+
+Welke Mac je hebt, zie je via het Apple-menu > *Over deze Mac*: bij *Chip* staat "Apple M…", bij *Processor* staat "Intel".
 | Linux | `Dammen-linux.tar.gz` | Uitpakken en `Dammen/bin/Dammen` starten. |
 
 Deze versies bewaren de topscores en instellingen in de map `Dammen` in je thuismap.
