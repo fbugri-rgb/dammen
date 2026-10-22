@@ -25,7 +25,7 @@ public class SettingsRepository {
     private final File file;
 
     public SettingsRepository() {
-        this(new File(FILE_NAME));
+        this(DataFolder.file(FILE_NAME));
     }
 
     /**

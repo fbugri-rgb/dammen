@@ -29,7 +29,7 @@ public class HighScoreRepository {
     private final File file;
 
     public HighScoreRepository() {
-        this(new File(FILE_NAME));
+        this(DataFolder.file(FILE_NAME));
     }
 
     /**

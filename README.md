@@ -19,41 +19,54 @@ Een schijf verzetten kan op twee manieren: slepen (drag and drop), of klikken op
 schijf en daarna op het veld waar ze naartoe moet. De velden waar je naartoe mag,
 lichten groen op.
 
-## Starten
+## Downloaden en spelen
 
-Open het project in IntelliJ IDEA (het wordt vanzelf ingelezen via `pom.xml`), kies
-bovenaan de startconfiguratie **"Dammen spelen"** en klik op de groene pijl. Die
-configuratie start `be.kdg.dammen.Main` op en zit mee in het project.
+Onder [Releases](https://github.com/fbugri-rgb/dammen/releases) staat het spel
+kant-en-klaar voor elk besturingssysteem. Java zit erin, je hoeft niets te
+installeren.
 
-Vanuit een terminal kan het ook:
+| Computer | Bestand | Starten |
+|---|---|---|
+| Windows | `Dammen-windows.zip` | Uitpakken en `Dammen.exe` in de map `Dammen` openen. Klik bij "Windows heeft uw pc beschermd" op *Meer info* > *Toch uitvoeren*. |
+| macOS (Apple Silicon) | `Dammen-macos.dmg` | Openen en Dammen naar *Programma's* slepen. De eerste keer: *Systeeminstellingen* > *Privacy en beveiliging* > *Toch openen*. |
+| Linux | `Dammen-linux.tar.gz` | Uitpakken en `Dammen/bin/Dammen` starten. |
 
-```
-mvn clean javafx:run
-```
+Deze versies bewaren de topscores en instellingen in de map `Dammen` in je thuismap.
 
-### Waarom er VM-opties bij de startconfiguratie staan
+Een nieuwe release maken: push een tag, bijvoorbeeld
+`git tag v1.0.0 && git push origin v1.0.0`. GitHub Actions bouwt dan de drie versies
+(zie `.github/workflows/builds.yml`). Zelf een versie maken voor je eigen computer kan
+met `bash scripts/package.sh`, het resultaat komt in `target/dist`.
 
-`Main` erft over van `Application`, en Java weigert zo'n klasse te starten zolang
-JavaFX niet als **module** geladen is. JavaFX komt hier via Maven binnen en staat dus
-op het klassenpad, niet op het modulepad. Zonder extra opties krijg je daarom:
+## Starten vanuit de broncode
+
+Enkel **Java 21** (of hoger) moet geïnstalleerd zijn. Maven en JavaFX worden de eerste
+keer vanzelf gedownload, dat kan even duren.
+
+- **Dubbelklikken:** het bestand `spelen.bat` in de projectmap (Windows).
+- **In IntelliJ IDEA:** open de projectmap (het project wordt vanzelf ingelezen via
+  `pom.xml`), kies bovenaan de startconfiguratie **"Dammen spelen"** en klik op de
+  groene pijl. Je kan ook gewoon met de rechtermuisknop op `Launcher.java` klikken en
+  *Run* kiezen.
+- **In een terminal:** `mvnw javafx:run` (Windows) of `./mvnw javafx:run`
+  (macOS/Linux). Maven hoeft daarvoor niet geïnstalleerd te zijn.
+
+### Waarom er een aparte klasse `Launcher` is
+
+`Main` erft over van `Application`, en Java weigert zo'n klasse rechtstreeks te
+starten zolang JavaFX niet als **module** geladen is. Wie `Main` start, krijgt daarom:
 
 ```
 Error: JavaFX runtime components are missing, and are required to run this application
 ```
 
-De startconfiguratie lost dat op met deze VM-opties, waarbij `$MAVEN_REPOSITORY$` door
-IntelliJ zelf ingevuld wordt met de map `.m2` van de gebruiker:
-
-```
---module-path "$MAVEN_REPOSITORY$/org/openjfx/javafx-base/21.0.6/javafx-base-21.0.6-win.jar;...(graphics, controls, media)..." --add-modules javafx.controls,javafx.media
-```
-
-Werk je op macOS of Linux, vervang dan `-win` door `-mac` of `-linux`.
-Met `mvn clean javafx:run` is dit nooit nodig: die plugin regelt het modulepad zelf.
+`Launcher` erft niet over van `Application` en roept enkel `Main.main` op. Daardoor
+gebeurt die controle niet en zijn er geen VM-opties of paden naar JavaFX nodig, op
+Windows, macOS en Linux. Start het spel dus altijd via `Launcher`.
 
 ## De testen uitvoeren
 
-Er zijn 98 JUnit-testen die de spelregels, het terugnemen van zetten, de
+Er zijn 100 JUnit-testen die de spelregels, het terugnemen van zetten, de
 computertegenstander en het werken met bestanden nakijken. Alle resultaten komen op
 het scherm.
 
